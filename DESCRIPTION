@@ -1,0 +1,11 @@
+Package: attbl
+Type: Package
+Title: Extending tibbles to data frame attributes
+Version: 0.1.0
+Author: Michael W. Kearney
+Maintainer: Michael W. Kearney <kearneymw@missouri.edu>
+Description: Introduces new `attbl` class along with methods
+    for `filter`, `select`, `arrange`, `mutate`, and `group_by`.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
