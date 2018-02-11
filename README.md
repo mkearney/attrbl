@@ -28,7 +28,7 @@ x <- mtcars
 attr(x, "test") <- rnorm(10)
 ```
 
-When data frames are merged with [`dplyr::bind_rows`](https://github.com/tidyverse/dplyr), they lose their attribute(s).
+When `data.frames` are merged with [`dplyr::bind_rows`](https://github.com/tidyverse/dplyr), they lose their attribute(s).
 
 ``` r
 bind_rows(x, x) %>% 
@@ -36,16 +36,16 @@ bind_rows(x, x) %>%
 ## NULL
 ```
 
-When `atbl` data frames are merged with `bind_rows`, they preserve their attribute(s)
+When `atbl`s are merged with `bind_rows`, they keep their attribute(s).
 
 ``` r
 x <- as_atbl(x)
 bind_rows(x, x) %>%
   attr("test")
-##  [1]  0.3300858  1.0674592  0.3531334  0.9764582  1.6623383 -1.9361612
-##  [7] -1.5835125 -0.4925910 -0.3398126 -0.2792944  0.3300858  1.0674592
-## [13]  0.3531334  0.9764582  1.6623383 -1.9361612 -1.5835125 -0.4925910
-## [19] -0.3398126 -0.2792944
+##  [1] -0.67225454  1.47760845  0.29545359  0.30437368 -0.01931117
+##  [6] -0.29369958  0.38569401 -0.60030117 -0.91705550 -0.20773602
+## [11] -0.67225454  1.47760845  0.29545359  0.30437368 -0.01931117
+## [16] -0.29369958  0.38569401 -0.60030117 -0.91705550 -0.20773602
 ```
 
 Also, select attributes using non-standard evaluation
@@ -53,8 +53,8 @@ Also, select attributes using non-standard evaluation
 ``` r
 atselect(x, test)
 ## $test
-##  [1]  0.3300858  1.0674592  0.3531334  0.9764582  1.6623383 -1.9361612
-##  [7] -1.5835125 -0.4925910 -0.3398126 -0.2792944
+##  [1] -0.67225454  1.47760845  0.29545359  0.30437368 -0.01931117
+##  [6] -0.29369958  0.38569401 -0.60030117 -0.91705550 -0.20773602
 ```
 
 <!--

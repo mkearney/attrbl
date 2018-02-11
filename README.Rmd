@@ -34,14 +34,14 @@ x <- mtcars
 attr(x, "test") <- rnorm(10)
 ```
 
-When data frames are merged with [`dplyr::bind_rows`](https://github.com/tidyverse/dplyr), they lose their attribute(s).
+When `data.frames` are merged with [`dplyr::bind_rows`](https://github.com/tidyverse/dplyr), they lose their attribute(s).
 
 ```{r}
 bind_rows(x, x) %>% 
   attr("test")
 ```
 
-When `atbl` data frames are merged with `bind_rows`, they preserve their attribute(s)
+When `atbl`s are merged with `bind_rows`, they keep their attribute(s).
 
 ```{r}
 x <- as_atbl(x)
