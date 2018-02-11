@@ -24,7 +24,7 @@ devtools::install_github("mkearney/atbl")
 
 ## Usage
 
-### Bind `atbl` objects without losing attributes
+### Bind data frames without losing attributes
 
 When a `data.frame` is merged with `bind_rows` (from [dplyr](https://github.com/tidyverse/dplyr)), it **loses** its attribute(s).
 

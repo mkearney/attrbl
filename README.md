@@ -18,7 +18,7 @@ devtools::install_github("mkearney/atbl")
 Usage
 -----
 
-### Bind `atbl` objects without losing attributes
+### Bind data frames without losing attributes
 
 When a `data.frame` is merged with `bind_rows` (from [dplyr](https://github.com/tidyverse/dplyr)), it **loses** its attribute(s).
 
@@ -115,7 +115,7 @@ mtcars %>%
 ## set.seed(1234)
 ## 
 ## $timestamp
-## [1] "2018-02-11 15:53:31 CST"
+## [1] "2018-02-11 15:54:58 CST"
 ```
 
 <!--
