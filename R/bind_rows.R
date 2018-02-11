@@ -18,11 +18,11 @@ bind_rows.default <- function(...) {
   }
 }
 
-get_all_ats <- function(.x) UseMethod("get_all_ats")
 
 uq_row_names <- function(.x) !identical(.x, as.character(1:length(.x)))
 
-get_all_ats.default <- function(.x) {
+get_all_ats_ <- function(.x) {
+  .x <- as_tbl(.x)
   ats <- attributes(.x)
   if (uq_row_names(.x)) {
     ats <- ats[!names(ats) %in% c("class", "names")]
@@ -34,5 +34,6 @@ get_all_ats.default <- function(.x) {
   ats
 }
 
-get_all_ats.list <- function(.x) lapply(.x, get_all_ats)
+
+get_all_ats <- function(.x) lapply(.x, get_all_ats_)
 

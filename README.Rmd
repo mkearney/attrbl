@@ -9,6 +9,28 @@ knitr::opts_chunk$set(echo = TRUE)
 
 A tibble-like package for data frames with attributes worth preserving.
 
+## Demo
+
+```{r}
+library(atbl)
+
+x <- mtcars
+attr(x, "test") <- c(random = rnorm(10))
+
+x <- as_atbl(x)
+
+atselect(x, test)
+
+atbl()
+
+atselect(x, row.names)
+
+bind_rows(x, x)
+
+bind_rows(x, x) %>% atselect(row.names)
+```
+
+
 ## Tidy evaluation
 
 + [Slides: Tidy Eval Hygienic FEXPRS](https://www.r-project.org/dsc/2017/slides/tidyeval-hygienic-fexprs.pdf)
