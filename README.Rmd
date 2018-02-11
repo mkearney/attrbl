@@ -1,11 +1,13 @@
 ---
-title: "attble"
+title: "atble"
 output: github_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+A tibble-like package for data frames with attributes worth preserving.
 
 ## Tidy evaluation
 

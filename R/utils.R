@@ -6,3 +6,7 @@ set_class <- function(x, ..., inherit = FALSE) {
   class(x) <- unique(dots)
   x
 }
+
+listdf <- function(x) {
+  tibble::as_data_frame(lapply(x, function(x) list(x)), validate = FALSE)
+}
