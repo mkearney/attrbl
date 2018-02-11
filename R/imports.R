@@ -1,4 +1,3 @@
-#' the pipe
 #' @importFrom magrittr %>%
 #' @export
 magrittr::`%>%`

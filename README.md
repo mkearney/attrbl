@@ -18,10 +18,10 @@ atselect(x, test)
 ```
 
     ## $test
-    ##     random1     random2     random3     random4     random5     random6 
-    ##  0.73691962  1.29557794  0.21532462 -0.08552352  0.99411714  1.19058928 
-    ##     random7     random8     random9    random10 
-    ## -0.10156451  0.96864195  1.88218378  0.18465373
+    ##    random1    random2    random3    random4    random5    random6 
+    ##  0.1140306 -1.1548320  1.5458679 -0.2529184 -0.2922021  0.7628903 
+    ##    random7    random8    random9   random10 
+    ## -1.3150832 -2.4491242 -0.8859299  1.1436794
 
 ``` r
 atbl()
@@ -70,32 +70,35 @@ bind_rows(x, x)
     ## # ... with 54 more rows
 
 ``` r
-bind_rows(x, x) %>% atselect(row.names)
+bind_rows(x, x) %>% atselect(test)
 ```
 
-    ## $row.names
-    ##  [1] "Mazda RX4"           "Mazda RX4 Wag"       "Datsun 710"         
-    ##  [4] "Hornet 4 Drive"      "Hornet Sportabout"   "Valiant"            
-    ##  [7] "Duster 360"          "Merc 240D"           "Merc 230"           
-    ## [10] "Merc 280"            "Merc 280C"           "Merc 450SE"         
-    ## [13] "Merc 450SL"          "Merc 450SLC"         "Cadillac Fleetwood" 
-    ## [16] "Lincoln Continental" "Chrysler Imperial"   "Fiat 128"           
-    ## [19] "Honda Civic"         "Toyota Corolla"      "Toyota Corona"      
-    ## [22] "Dodge Challenger"    "AMC Javelin"         "Camaro Z28"         
-    ## [25] "Pontiac Firebird"    "Fiat X1-9"           "Porsche 914-2"      
-    ## [28] "Lotus Europa"        "Ford Pantera L"      "Ferrari Dino"       
-    ## [31] "Maserati Bora"       "Volvo 142E"          "Mazda RX4"          
-    ## [34] "Mazda RX4 Wag"       "Datsun 710"          "Hornet 4 Drive"     
-    ## [37] "Hornet Sportabout"   "Valiant"             "Duster 360"         
-    ## [40] "Merc 240D"           "Merc 230"            "Merc 280"           
-    ## [43] "Merc 280C"           "Merc 450SE"          "Merc 450SL"         
-    ## [46] "Merc 450SLC"         "Cadillac Fleetwood"  "Lincoln Continental"
-    ## [49] "Chrysler Imperial"   "Fiat 128"            "Honda Civic"        
-    ## [52] "Toyota Corolla"      "Toyota Corona"       "Dodge Challenger"   
-    ## [55] "AMC Javelin"         "Camaro Z28"          "Pontiac Firebird"   
-    ## [58] "Fiat X1-9"           "Porsche 914-2"       "Lotus Europa"       
-    ## [61] "Ford Pantera L"      "Ferrari Dino"        "Maserati Bora"      
-    ## [64] "Volvo 142E"
+    ## $test
+    ##    random1    random2    random3    random4    random5    random6 
+    ##  0.1140306 -1.1548320  1.5458679 -0.2529184 -0.2922021  0.7628903 
+    ##    random7    random8    random9   random10    random1    random2 
+    ## -1.3150832 -2.4491242 -0.8859299  1.1436794  0.1140306 -1.1548320 
+    ##    random3    random4    random5    random6    random7    random8 
+    ##  1.5458679 -0.2529184 -0.2922021  0.7628903 -1.3150832 -2.4491242 
+    ##    random9   random10 
+    ## -0.8859299  1.1436794
+
+``` r
+y <- mtcars
+attr(y, "test") <- rnorm(10)
+
+atselect(y, test)
+```
+
+    ## $test
+    ##  [1]  0.99351537 -0.73205377  0.64268293  0.59444387  0.20137613
+    ##  [6] -1.88020263  0.02581022 -0.11636840  0.06298603  0.69963189
+
+``` r
+try(dplyr::bind_rows(y, y) %>% atselect(test)) %>% as.character()
+```
+
+    ## [1] "Error in .f(.x[[i]], ...) : object 'test' not found\n"
 
 Tidy evaluation
 ---------------

@@ -27,7 +27,13 @@ atselect(x, row.names)
 
 bind_rows(x, x)
 
-bind_rows(x, x) %>% atselect(row.names)
+bind_rows(x, x) %>% atselect(test)
+
+y <- mtcars
+attr(y, "test") <- rnorm(10)
+
+atselect(y, test)
+try(dplyr::bind_rows(y, y) %>% atselect(test)) %>% as.character()
 ```
 
 
