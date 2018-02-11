@@ -1,5 +1,5 @@
 ---
-title: "atble"
+title: "atbl"
 output: github_document
 ---
 
@@ -36,8 +36,9 @@ bind_rows(mtcars, mtcars) %>%
 When an `atbl` is merged with `bind_rows`, it **keeps** its attribute(s).
 
 ```{r}
-mtcars <- as_atbl(mtcars)
-bind_rows(mtcars, mtcars) %>%
+mtcars %>%
+  as_atbl() %>%
+  bind_rows(., .) %>%
   attr("row.names")
 ```
 

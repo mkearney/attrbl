@@ -1,4 +1,4 @@
-atble
+atbl
 ================
 
 A tibble-like package for data frames with attributes worth preserving.
@@ -33,8 +33,9 @@ bind_rows(mtcars, mtcars) %>%
 When an `atbl` is merged with `bind_rows`, it **keeps** its attribute(s).
 
 ``` r
-mtcars <- as_atbl(mtcars)
-bind_rows(mtcars, mtcars) %>%
+mtcars %>%
+  as_atbl() %>%
+  bind_rows(., .) %>%
   attr("row.names")
 ##  [1] "Mazda RX4"           "Mazda RX4 Wag"       "Datsun 710"         
 ##  [4] "Hornet 4 Drive"      "Hornet Sportabout"   "Valiant"            
@@ -80,7 +81,7 @@ atselect(mtcars, row.names, class)
 ## [31] "Maserati Bora"       "Volvo 142E"         
 ## 
 ## $class
-## [1] "atbl"       "tbl_df"     "data.frame"
+## [1] "data.frame"
 ```
 
 ### Add attributes with `add_ats`
@@ -115,7 +116,7 @@ mtcars %>%
 ## set.seed(1234)
 ## 
 ## $timestamp
-## [1] "2018-02-11 15:54:58 CST"
+## [1] "2018-02-11 15:57:51 CST"
 ```
 
 <!--
