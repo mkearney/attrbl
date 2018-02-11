@@ -15,7 +15,7 @@ A tibble-like package for data frames with attributes worth preserving.
 library(atbl)
 
 x <- mtcars
-attr(x, "test") <- c(random = rnorm(10))
+attr(x, "test") <- rnorm(10)
 
 x <- as_atbl(x)
 
