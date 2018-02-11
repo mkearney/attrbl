@@ -1,3 +1,15 @@
+#' @importFrom magrittr %>%
+#' @export
+magrittr::`%>%`
+
+#' as tibble shorthand
+#' @importFrom tibble as_tibble
+#' @export
+as_tbl <- function(x) {
+  tibble::as_tibble(x, validate = FALSE)
+}
+
+
 `%===%` <- function(lhs, rhs) isTRUE(lhs == rhs)
 
 set_class <- function(x, ..., inherit = FALSE) {
@@ -10,18 +22,5 @@ set_class <- function(x, ..., inherit = FALSE) {
 }
 
 listdf <- function(x) {
-  tibble::as_data_frame(lapply(x, function(x) list(x)), validate = FALSE)
+  tibble::as_data_frame(lapply(x, list), validate = FALSE)
 }
-
-
-#' @importFrom magrittr %>%
-#' @export
-magrittr::`%>%`
-
-#' as tibble shorthand
-#' @importFrom tibble as_tibble
-#' @export
-as_tbl <- function(x) {
-  tibble::as_tibble(x, validate = FALSE)
-}
-

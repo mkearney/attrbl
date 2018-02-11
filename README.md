@@ -1,7 +1,7 @@
 atbl
 ================
 
-A tibble-like package for data frames with attributes worth preserving.
+A tibble-like package for working with attributes and data frames.
 
 Install
 -------
@@ -15,27 +15,88 @@ if (!requireNamespace("devtools", quietly = TRUE)) {
 devtools::install_github("mkearney/atbl")
 ```
 
+Use case
+--------
+
+Let's say you have a list of two data frames. And each data frame contains a data frame attribute "users" with 100 observations.
+
+``` r
+## tweets data with users data attribute
+rts <- list(
+  rtweet::search_tweets("statistics", verbose = FALSE),
+  rtweet::search_tweets("data science", verbose = FALSE))
+
+## each object contains "users" data attribute with 100 rows
+rts %>%
+  lapply(rtweet::users_data) %>%
+  lapply(nrow)
+## [[1]]
+## [1] 100
+## 
+## [[2]]
+## [1] 100
+```
+
+When you bind the data frames using `do.call(..., rbind)`, it returns a "users" attribute. But it only has 100 rows (not 200). It completely **drops** the second "users" attribute!
+
+``` r
+## base R's method
+rts %>%
+  do.call("rbind", .) %>%
+  attr("users") %>%
+  nrow()
+## [1] 100
+```
+
+When you bind the data frames using `dplyr::bind_rows(...)`, it **doesn't return** a "users" attribute at all!
+
+``` r
+## dplyr's bind_rows method
+rts %>%
+  dplyr::bind_rows() %>%
+  attr("users")
+## NULL
+```
+
+But when you bind the data frames using `atbl::do_call_rbind(...)`, it not only **keeps** all "users" attributes. It binds them together for you!
+
+``` r
+## atbl's do_call_rbind method
+rts %>%
+  lapply(as_atbl) %>%
+  do_call_rbind() %>%
+  attr("users") %>%
+  nrow()
+## [1] 200
+```
+
 Usage
 -----
 
 ### Bind data frames without losing attributes
 
-When a `data.frame` is merged with `bind_rows` (from [dplyr](https://github.com/tidyverse/dplyr)), it **loses** its attribute(s).
+When a `data.frame` is merged with `dplyr::bind_rows(...)`, it **loses** its attribute(s).
 
 ``` r
-bind_rows(mtcars, mtcars) %>% 
+## list of data frames
+mtcars2 <- list(mtcars, mtcars)
+
+## dplyr method
+mtcars2 %>%
+  dplyr::bind_rows() %>%
   attr("row.names")
 ##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
 ## [24] 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46
 ## [47] 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64
 ```
 
-When an `atbl` is merged with `bind_rows`, it **keeps** its attribute(s).
+When an `atbl` is merged with `atbl::do_call_rbind`, it **keeps** its attribute(s).
 
 ``` r
-mtcars %>%
-  as_atbl() %>%
-  bind_rows(., .) %>%
+## atbl method
+mtcars2 %>%
+  lapply(as_atbl) %>%
+  do_call_rbind() %>%
   attr("row.names")
 ##  [1] "Mazda RX4"           "Mazda RX4 Wag"       "Datsun 710"         
 ##  [4] "Hornet 4 Drive"      "Hornet Sportabout"   "Valiant"            
@@ -116,7 +177,7 @@ mtcars %>%
 ## set.seed(1234)
 ## 
 ## $timestamp
-## [1] "2018-02-11 15:57:51 CST"
+## [1] "2018-02-11 17:26:46 CST"
 ```
 
 <!--

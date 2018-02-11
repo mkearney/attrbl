@@ -1,15 +1,17 @@
 
 #' @export
-bind_rows <- function(...) UseMethod("bind_rows")
+do_call_rbind <- function(...) UseMethod("do_call_rbind")
 
 #' @export
-bind_rows.default <- function(...) {
-  dots <- list(...)
+do_call_rbind.default <- function(...) {
+  dots <- c(...)
   is_ats <- vapply(dots, inherits, "atbl", FUN.VALUE = logical(1))
   if (sum(is_ats) > 0L) {
     ats <- get_all_ats(dots)
-    ats <- lapply(ats, listdf)
-    ats <- lapply(as_tbl(do.call("rbind", ats)), unlist, recursive = FALSE)
+    ats <- do.call("c", ats)
+    ats_names <- unique(names(ats))
+    ats <- lapply(ats_names, function(i) rcbind(ats[names(ats) == i]))
+    names(ats) <- ats_names
     dots <- lapply(dots, as_tbl)
     .x <- dplyr::bind_rows(dots)
     add_ats(.x, ats)
@@ -22,7 +24,6 @@ bind_rows.default <- function(...) {
 uq_row_names <- function(.x) !identical(.x, as.character(1:length(.x)))
 
 get_all_ats_ <- function(.x) {
-  .x <- as_tbl(.x)
   ats <- attributes(.x)
   if (uq_row_names(.x)) {
     ats <- ats[!names(ats) %in% c("class", "names")]
@@ -34,6 +35,29 @@ get_all_ats_ <- function(.x) {
   ats
 }
 
+unlist_bind <- function(x) {
+  x <- unlist(x, recursive = FALSE)
+  if (is.list(x)) {
+    x <- dplyr::bind_rows(x)
+  }
+  x
+}
+
 
 get_all_ats <- function(.x) lapply(.x, get_all_ats_)
 
+
+
+
+rcbind <- function(x) UseMethod("rcbind")
+
+rcbind.default <- function(x) x
+
+rcbind.list <- function(x) {
+  isdf <- vapply(x, is.data.frame, FUN.VALUE = logical(1), USE.NAMES = FALSE)
+  if (all(isdf)) {
+    dplyr::bind_rows(x)
+  } else {
+    unlist(x, recursive = FALSE, use.names = FALSE)
+  }
+}
