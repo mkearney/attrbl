@@ -7,7 +7,7 @@ atbl <- function(length = 0L) UseMethod("atbl")
 #' @export
 atbl.default <- function(length) {
   if (missing(length) || length %===% 0 || length %===% 1) {
-    return(set_class(data.frame(), "atbl"))
+    return(set_class(data.frame(), c("atbl", "tbl_df", "data.frame")))
   }
   lapply(seq_len(length), function(x)
     set_class(data.frame(), c("atbl", "tbl_df", "data.frame")))
