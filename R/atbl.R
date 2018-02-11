@@ -2,8 +2,6 @@
 #' @export
 atbl <- function(length = 0L) UseMethod("atbl")
 
-`%===%` <- function(lhs, rhs) isTRUE(lhs == rhs)
-
 #' @export
 atbl.default <- function(length) {
   if (missing(length) || length %===% 0 || length %===% 1) {
@@ -16,4 +14,29 @@ atbl.default <- function(length) {
 #' @export
 atbl.data.frame <- function(.x) {
   set_class(.x, c("atbl", "tbl_df", "data.frame"))
+}
+
+#' Convert to atbl
+#'
+#' @param .x Data to be converted
+#' @return An atbl (attribute data frame)
+#' @export
+as_atbl <- function(.x) UseMethod("as_atbl")
+
+#' @export
+as_atbl.data.frame <- function(.x) {
+  .x <- tibble::as_data_frame(.x)
+  atbl(.x)
+}
+
+as_atbl.atbl <- function(.x) {
+  .x <- tibble::as_data_frame(.x)
+  atbl(.x)
+}
+
+
+#' @export
+as_atbl.list <- function(.x) {
+  .x <- as_tbl(.x)
+  atbl(.x)
 }
