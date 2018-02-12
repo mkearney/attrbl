@@ -1,12 +1,7 @@
-#' @importFrom magrittr %>%
-#' @export
-magrittr::`%>%`
-
 #' @importFrom tibble as_tibble
 as_tbl <- function(x) {
   tibble::as_tibble(x, validate = FALSE)
 }
-
 
 `%===%` <- function(lhs, rhs) isTRUE(lhs == rhs)
 
