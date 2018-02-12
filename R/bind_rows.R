@@ -5,7 +5,7 @@ do_call_rbind <- function(...) UseMethod("do_call_rbind")
 #' @export
 do_call_rbind.default <- function(...) {
   dots <- c(...)
-  is_ats <- vapply(dots, inherits, "atbl", FUN.VALUE = logical(1))
+  is_ats <- vapply(dots, inherits, "attrbl", FUN.VALUE = logical(1))
   if (sum(is_ats) > 0L) {
     ats <- get_all_ats(dots)
     ats <- do.call("c", ats)
@@ -14,7 +14,7 @@ do_call_rbind.default <- function(...) {
     names(ats) <- ats_names
     dots <- lapply(dots, as_tbl)
     .x <- dplyr::bind_rows(dots)
-    add_ats(.x, ats)
+    add_attr(.x, ats)
   } else {
     dplyr::bind_rows(dots)
   }

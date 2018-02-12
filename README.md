@@ -1,4 +1,4 @@
-atbl
+attrbl
 ================
 
 A tibble-like package for working with attributes and data frames.
@@ -12,7 +12,7 @@ Install the dev version from Github
 if (!requireNamespace("devtools", quietly = TRUE)) {
   install.packages("devtools")
 }
-devtools::install_github("mkearney/atbl")
+devtools::install_github("mkearney/attrbl")
 ```
 
 Use case
@@ -34,7 +34,7 @@ rts %>%
 ## [1] 100
 ## 
 ## [[2]]
-## [1] 100
+## [1] 98
 ```
 
 When you bind the data frames using `do.call(..., rbind)`, it returns a "users" attribute. But it only has 100 rows (not 200). It completely **drops** the second "users" attribute!
@@ -58,16 +58,16 @@ rts %>%
 ## NULL
 ```
 
-But when you bind the data frames using `atbl::do_call_rbind(...)`, it not only **keeps** all "users" attributes. It binds them together for you!
+But when you bind the data frames using `attrbl::do_call_rbind(...)`, it not only **keeps** all "users" attributes. It binds them together for you!
 
 ``` r
-## atbl's do_call_rbind method
+## attrbl's do_call_rbind method
 rts %>%
-  lapply(as_atbl) %>%
+  lapply(as_attrbl) %>%
   do_call_rbind() %>%
   attr("users") %>%
   nrow()
-## [1] 200
+## [1] 198
 ```
 
 Usage
@@ -90,12 +90,12 @@ mtcars2 %>%
 ## [47] 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64
 ```
 
-When an `atbl` is merged with `atbl::do_call_rbind`, it **keeps** its attribute(s).
+When an `attrbl` is merged with `attrbl::do_call_rbind`, it **keeps** its attribute(s).
 
 ``` r
-## atbl method
+## attrbl method
 mtcars2 %>%
-  lapply(as_atbl) %>%
+  lapply(as_attrbl) %>%
   do_call_rbind() %>%
   attr("row.names")
 ##  [1] "Mazda RX4"           "Mazda RX4 Wag"       "Datsun 710"         
@@ -145,13 +145,13 @@ atselect(mtcars, row.names, class)
 ## [1] "data.frame"
 ```
 
-### Add attributes with `add_ats`
+### Add attributes with `add_attr`
 
-Use `add_ats` to add one or more attributes to a data frame.
+Use `add_attr` to add one or more attributes to a data frame.
 
 ``` r
 mtcars %>%
-  add_ats(seed = quote(set.seed(1234)), timestamp = Sys.time()) %>%
+  add_attr(seed = quote(set.seed(1234)), timestamp = Sys.time()) %>%
   attributes()
 ## $names
 ##  [1] "mpg"  "cyl"  "disp" "hp"   "drat" "wt"   "qsec" "vs"   "am"   "gear"
@@ -171,13 +171,13 @@ mtcars %>%
 ## [31] "Maserati Bora"       "Volvo 142E"         
 ## 
 ## $class
-## [1] "atbl"       "tbl_df"     "data.frame"
+## [1] "attrbl"     "tbl_df"     "data.frame"
 ## 
 ## $seed
 ## set.seed(1234)
 ## 
 ## $timestamp
-## [1] "2018-02-11 17:26:46 CST"
+## [1] "2018-02-11 20:47:34 CST"
 ```
 
 <!--

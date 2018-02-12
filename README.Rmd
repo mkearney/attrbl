@@ -1,11 +1,11 @@
 ---
-title: "atbl"
+title: "attrbl"
 output: github_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, collapse = TRUE)
-library(atbl)
+library(attrbl)
 ```
 
 A tibble-like package for working with attributes and data frames.
@@ -18,7 +18,7 @@ Install the dev version from Github
 if (!requireNamespace("devtools", quietly = TRUE)) {
   install.packages("devtools")
 }
-devtools::install_github("mkearney/atbl")
+devtools::install_github("mkearney/attrbl")
 ```
 
 ## Use case
@@ -56,12 +56,12 @@ rts %>%
   attr("users")
 ```
 
-But when you bind the data frames using `atbl::do_call_rbind(...)`, it not only **keeps** all "users" attributes. It binds them together for you!
+But when you bind the data frames using `attrbl::do_call_rbind(...)`, it not only **keeps** all "users" attributes. It binds them together for you!
 
 ```{r}
-## atbl's do_call_rbind method
+## attrbl's do_call_rbind method
 rts %>%
-  lapply(as_atbl) %>%
+  lapply(as_attrbl) %>%
   do_call_rbind() %>%
   attr("users") %>%
   nrow()
@@ -83,12 +83,12 @@ mtcars2 %>%
   attr("row.names")
 ```
 
-When an `atbl` is merged with `atbl::do_call_rbind`, it **keeps** its attribute(s).
+When an `attrbl` is merged with `attrbl::do_call_rbind`, it **keeps** its attribute(s).
 
 ```{r}
-## atbl method
+## attrbl method
 mtcars2 %>%
-  lapply(as_atbl) %>%
+  lapply(as_attrbl) %>%
   do_call_rbind() %>%
   attr("row.names")
 ```
@@ -101,13 +101,13 @@ Use `atselect` to select attributes the tidy way (no quotes required).
 atselect(mtcars, row.names, class)
 ```
 
-### Add attributes with `add_ats`
+### Add attributes with `add_attr`
 
-Use `add_ats` to add one or more attributes to a data frame.
+Use `add_attr` to add one or more attributes to a data frame.
 
 ```{r}
 mtcars %>%
-  add_ats(seed = quote(set.seed(1234)), timestamp = Sys.time()) %>%
+  add_attr(seed = quote(set.seed(1234)), timestamp = Sys.time()) %>%
   attributes()
 ```
 

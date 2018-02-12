@@ -4,7 +4,7 @@
 #' @param .x Data object on which to add attributes.
 #' @param ... Named elements to be attached to .x as attributes.
 #' @export
-add_ats <- function(.x, ...) {
+add_attr <- function(.x, ...) {
   ats <- list(...)
   if (length(ats) == 1L && !is.null(names(ats[[1]]))) {
     ats <- ats[[1]]
@@ -16,5 +16,5 @@ add_ats <- function(.x, ...) {
   for (i in seq_along(ats)) {
     attr(.x, atnames[i]) <- ats[[i]]
   }
-  atbl(.x)
+  attrbl(.x)
 }

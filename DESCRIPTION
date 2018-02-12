@@ -1,4 +1,4 @@
-Package: atbl
+Package: attrbl
 Type: Package
 Title: Extending tibbles to data frame attributes
 Version: 0.1.0
