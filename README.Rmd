@@ -4,11 +4,14 @@ output: github_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, collapse = TRUE)
+knitr::opts_chunk$set(echo = TRUE, collapse = FALSE, comment = "#>")
 library(attrbl)
+library(magrittr)
 ```
 
 A tibble-like package for working with attributes and data frames.
+
+***Warning: this package is in early development***
 
 ## Install
 
@@ -23,7 +26,7 @@ devtools::install_github("mkearney/attrbl")
 
 ## Use case
 
-Let's say you have a list of two data frames. And each data frame contains a data frame attribute "users" with 100 observations.
+Let's say you have a list of two data frames. And each data frame contains a data frame attribute "users" with around 100 observations.
 
 ```{r, cache=TRUE}
 ## tweets data with users data attribute
@@ -31,13 +34,13 @@ rts <- list(
   rtweet::search_tweets("statistics", verbose = FALSE),
   rtweet::search_tweets("data science", verbose = FALSE))
 
-## each object contains "users" data attribute with 100 rows
+## each object contains "users" data attribute with around 100 rows
 rts %>%
   lapply(rtweet::users_data) %>%
   lapply(nrow)
 ```
 
-When you bind the data frames using `do.call(..., rbind)`, it returns a "users" attribute. But it only has 100 rows (not 200). It completely **drops** the second "users" attribute!
+When you bind the data frames using `do.call(..., rbind)`, it returns a "users" attribute. But it only has around 100 rows (it should be closer to 200). It completely **drops** the second "users" attribute!
 
 ```{r}
 ## base R's method
